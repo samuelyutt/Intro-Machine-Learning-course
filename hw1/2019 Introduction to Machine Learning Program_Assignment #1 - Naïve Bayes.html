@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        2019 Introduction to Machine Learning Program
+Assignment #1 - Naïve Bayes - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @charset "UTF-8";@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram{text-align:center;background-color:inherit;border-radius:0;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;padding:0 15px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc-label{opacity:.3;background-color:#ccc;border:none;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:23px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:3px;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-published-note{color:#337ab7}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em}.focus,:focus{outline:none!important}::-moz-focus-inner{border:0!important}body{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="2019-Introduction-to-Machine-Learning-Program-Assignment-1---Naïve-Bayes"><a class="anchor hidden-xs" href="#2019-Introduction-to-Machine-Learning-Program-Assignment-1---Naïve-Bayes" title="2019-Introduction-to-Machine-Learning-Program-Assignment-1---Naïve-Bayes"><span class="octicon octicon-link"></span></a>2019 Introduction to Machine Learning Program<br>
+Assignment #1 - Naïve Bayes</h1><div class="alert alert-info">
+<p>CS10 游騰德 0616026</p>
+</div><h1 id="Objective"><a class="anchor hidden-xs" href="#Objective" title="Objective"><span class="octicon octicon-link"></span></a>Objective</h1><ol>
+<li>
+<p>Data Input</p>
+<ol>
+<li>Mushroom<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span></div><div class="code"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'Downloads/agaricus-lepiota.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+</div></div></code></pre>
+</li>
+<li>Iris<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span></div><div class="code"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'bezdekIris.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+</div></div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>Data Visualization</p>
+<div class="alert alert-warning">
+<p>Please refer to <a href="https://drive.google.com/open?id=1lbkhYAlIu2dbEQnpmTXoh10k97fQlKIx" target="_blank" rel="noopener">here</a> to view all data visualization</p>
+</div>
+<ol>
+<li>Mushroom<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span></div><div class="code"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+savefig = <span class="hljs-number">0</span>
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'agaricus-lepiota.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    feature_name = [<span class="hljs-string">"label"</span>, <span class="hljs-string">"cap-shape"</span>, <span class="hljs-string">"cap-surface"</span>, <span class="hljs-string">"cap-color"</span>, <span class="hljs-string">"bruises?"</span>, <span class="hljs-string">"odor"</span>, <span class="hljs-string">"gill-attachment"</span>, <span class="hljs-string">"gill-spacing"</span>, <span class="hljs-string">"gill-size"</span>, <span class="hljs-string">"gill-color"</span>, <span class="hljs-string">"stalk-shape"</span>, <span class="hljs-string">"stalk-root"</span>, <span class="hljs-string">"stalk-surface-above-ring"</span>, <span class="hljs-string">"stalk-surface-below-ring"</span>, <span class="hljs-string">"stalk-color-above-ring"</span>, <span class="hljs-string">"stalk-color-below-ring"</span>, <span class="hljs-string">"veil-type"</span>, <span class="hljs-string">"veil-color"</span>, <span class="hljs-string">"ring-number"</span>, <span class="hljs-string">"ring-type"</span>, <span class="hljs-string">"spore-print-color"</span>, <span class="hljs-string">"population"</span>, <span class="hljs-string">"habitat"</span>]
+    feature_list_all = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    feature_list_e = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    feature_list_p = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> row[<span class="hljs-number">11</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'?'</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+        row = rows[r]
+
+        label = row[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">if</span> label <span class="hljs-keyword">in</span> feature_list_all[<span class="hljs-number">0</span>]:
+            feature_list_all[<span class="hljs-number">0</span>][label]+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            feature_list_all[<span class="hljs-number">0</span>][label] = <span class="hljs-number">1</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+            feature = row[i]
+            <span class="hljs-keyword">if</span> feature <span class="hljs-keyword">in</span> feature_list_all[i]:
+                feature_list_all[i][feature]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                feature_list_all[i][feature] = <span class="hljs-number">1</span>
+
+            <span class="hljs-keyword">if</span> label <span class="hljs-keyword">is</span> <span class="hljs-string">'e'</span>:
+                <span class="hljs-keyword">if</span> feature <span class="hljs-keyword">in</span> feature_list_e[i]:
+                    feature_list_e[i][feature]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">else</span>:
+                    feature_list_e[i][feature] = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> label <span class="hljs-keyword">is</span> <span class="hljs-string">'p'</span>:
+                <span class="hljs-keyword">if</span> feature <span class="hljs-keyword">in</span> feature_list_p[i]:
+                    feature_list_p[i][feature]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">else</span>:
+                    feature_list_p[i][feature] = <span class="hljs-number">1</span>
+
+    <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> range(<span class="hljs-number">24</span>):
+        <span class="hljs-keyword">if</span> f <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>:
+            keys = feature_list_all[f].keys()
+            vals = feature_list_all[f].values()
+            plt.bar(keys, np.divide(list(vals), sum(vals)), label=feature_name[f]+<span class="hljs-string">" distribution"</span>)
+            plt.ylim(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+            plt.ylabel (<span class="hljs-string">'Percentage'</span>)
+            plt.xlabel (feature_name[f])
+            plt.xticks(list(keys))
+            plt.legend (bbox_to_anchor=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), loc=<span class="hljs-string">"upper right"</span>, borderaxespad=<span class="hljs-number">0.</span>)
+            <span class="hljs-keyword">if</span> savefig:
+                plt.savefig(<span class="hljs-string">"Visualization/Mushroom/"</span>+feature_name[f]+<span class="hljs-string">"_distribution.png"</span>)
+            plt.show()
+        <span class="hljs-keyword">else</span>:
+            keys = feature_list_all[f].keys()
+            vals = feature_list_all[f].values()
+            plt.bar(keys, np.divide(list(vals), sum(vals)), label=feature_name[f]+<span class="hljs-string">" distribution"</span>)
+            plt.ylim(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+            plt.ylabel (<span class="hljs-string">'Percentage'</span>)
+            plt.xlabel (feature_name[f])
+            plt.xticks(list(keys))
+            plt.legend (bbox_to_anchor=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), loc=<span class="hljs-string">"upper right"</span>, borderaxespad=<span class="hljs-number">0.</span>)
+            <span class="hljs-keyword">if</span> savefig:
+                plt.savefig(<span class="hljs-string">"Visualization/Mushroom/"</span>+feature_name[f]+<span class="hljs-string">"_distribution.png"</span>)
+            plt.show()
+
+            keys = feature_list_e[f].keys()
+            vals = feature_list_e[f].values()
+            plt.bar(keys, np.divide(list(vals), sum(vals)), label=feature_name[f]+<span class="hljs-string">"|edible distribution"</span>)
+            plt.ylim(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+            plt.ylabel (<span class="hljs-string">'Percentage'</span>)
+            plt.xlabel (feature_name[f])
+            plt.xticks(list(keys))
+            plt.legend (bbox_to_anchor=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), loc=<span class="hljs-string">"upper right"</span>, borderaxespad=<span class="hljs-number">0.</span>)
+            <span class="hljs-keyword">if</span> savefig:
+                plt.savefig(<span class="hljs-string">"Visualization/Mushroom/"</span>+feature_name[f]+<span class="hljs-string">"|edible_distribution.png"</span>)
+            plt.show()
+
+            keys = feature_list_p[f].keys()
+            vals = feature_list_p[f].values()
+            plt.bar(keys, np.divide(list(vals), sum(vals)), label=feature_name[f]+<span class="hljs-string">"|poisionous distribution"</span>)
+            plt.ylim(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+            plt.ylabel (<span class="hljs-string">'Percentage'</span>)
+            plt.xlabel (feature_name[f])
+            plt.xticks(list(keys))
+            plt.legend (bbox_to_anchor=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), loc=<span class="hljs-string">"upper right"</span>, borderaxespad=<span class="hljs-number">0.</span>)
+            <span class="hljs-keyword">if</span> savefig:
+                plt.savefig(<span class="hljs-string">"Visualization/Mushroom/"</span>+feature_name[f]+<span class="hljs-string">"|poisionous_distribution.png"</span>)
+            plt.show()
+</div></div></code></pre>
+</li>
+<li>Iris<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span></div><div class="code"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+savefig = <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">GD</span><span class="hljs-params">(x, mu, sigma)</span>:</span>
+    N = <span class="hljs-number">1</span>/(sigma * np.sqrt(<span class="hljs-number">2</span> * np.pi)) * np.exp( - (x - mu)**<span class="hljs-number">2</span> / (<span class="hljs-number">2</span> * sigma**<span class="hljs-number">2</span>) )
+    <span class="hljs-keyword">return</span>(N)
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'bezdekIris.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    feature = [ [ [], [], [], [] ], [ [], [], [], [] ], [ [], [], [], [] ], [ [], [], [], [] ] ]
+
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> len(row) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+        row = rows[r]
+
+        iris = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+            iris = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+            iris = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+            iris = <span class="hljs-number">2</span>
+
+        <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+            feature[f][iris].append(float(row[f]))
+            feature[f][<span class="hljs-number">3</span>].append(float(row[f]))
+
+    feature_name = [<span class="hljs-string">"sepal length"</span>, <span class="hljs-string">"sepal width"</span>, <span class="hljs-string">"petal length"</span>, <span class="hljs-string">"petal width"</span>]
+    condition_name = [<span class="hljs-string">"|setosa"</span>, <span class="hljs-string">"|versicolor"</span>, <span class="hljs-string">"|virginica"</span>, <span class="hljs-string">""</span>]
+
+    <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+            print(<span class="hljs-string">"Average of"</span>, feature_name[f]+condition_name[c], statistics.mean(feature[f][c]))
+            print(<span class="hljs-string">"Standard deviation of"</span>, feature_name[f]+condition_name[c], statistics.stdev(feature[f][c]))
+            plt.hist(feature[f][c])
+            plt.title(feature_name[f]+condition_name[c])
+            plt.ylabel (<span class="hljs-string">'Count'</span>)
+            plt.xlabel (<span class="hljs-string">"Value"</span>)
+            <span class="hljs-keyword">if</span> savefig:
+                plt.savefig(<span class="hljs-string">"Visualization/Iris/"</span>+feature_name[f]+condition_name[c]+<span class="hljs-string">" distribution.png"</span>)
+            plt.show()
+</div></div></code></pre>
+Text Output of this python code:<pre><code>Average of sepal length|setosa 5.006
+Standard deviation of sepal length|setosa 0.3524896872134513
+Average of sepal length|versicolor 5.936
+Standard deviation of sepal length|versicolor 0.5161711470638634
+Average of sepal length|virginica 6.588
+Standard deviation of sepal length|virginica 0.6358795932744321
+Average of sepal length 5.843333333333334
+Standard deviation of sepal length 0.8280661279778629
+Average of sepal width|setosa 3.428
+Standard deviation of sepal width|setosa 0.37906436909628866
+Average of sepal width|versicolor 2.77
+Standard deviation of sepal width|versicolor 0.3137983233784114
+Average of sepal width|virginica 2.974
+Standard deviation of sepal width|virginica 0.32249663817263746
+Average of sepal width 3.0573333333333332
+Standard deviation of sepal width 0.4358662849366982
+Average of petal length|setosa 1.462
+Standard deviation of petal length|setosa 0.17366399648018407
+Average of petal length|versicolor 4.26
+Standard deviation of petal length|versicolor 0.46991097723995795
+Average of petal length|virginica 5.552
+Standard deviation of petal length|virginica 0.5518946956639834
+Average of petal length 3.758
+Standard deviation of petal length 1.7652982332594664
+Average of petal width|setosa 0.246
+Standard deviation of petal width|setosa 0.10538558938004565
+Average of petal width|versicolor 1.326
+Standard deviation of petal width|versicolor 0.19775268000454405
+Average of petal width|virginica 2.026
+Standard deviation of petal width|virginica 0.27465005563666733
+Average of petal width 1.1993333333333334
+Standard deviation of petal width 0.7622376689603465
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>Data processing</p>
+<ul>
+<li>Drop features with any missing value
+<ol>
+<li>Mushroom<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span></div><div class="code"><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+row = rows[r]
+<span class="hljs-keyword">if</span> row[<span class="hljs-number">11</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'?'</span>:
+    <span class="hljs-keyword">del</span> rows[r]
+</div></div></code></pre>
+</li>
+<li>Iris<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span></div><div class="code"><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+row = rows[r]
+<span class="hljs-keyword">if</span> len(row) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>:
+    <span class="hljs-keyword">del</span> rows[r]
+</div></div></code></pre>
+</li>
+</ol>
+</li>
+<li>Shuffle<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span></div><div class="code">random.shuffle(rows)
+</div></div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Model Construction</p>
+<ol>
+<li>Mushroom<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span></div><div class="code"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'e'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+        p_edible += math.log( ( feature_list[i][<span class="hljs-string">'e'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + (k*feature_count[i]) ) )
+    <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+        p_edible += math.log(<span class="hljs-number">1</span>/feature_count[i])
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'p'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+        p_poisonous += math.log( ( feature_list[i][<span class="hljs-string">'p'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]+ (k*feature_count[i]) ) )
+    <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+        p_poisonous += math.log(<span class="hljs-number">1</span>/feature_count[i])
+        p_edible += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+        p_poisonous += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+</div></div></code></pre>
+</li>
+<li>Iris<pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span></div><div class="code">p_setosa += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">0</span>]), statistics.stdev(sl[<span class="hljs-number">0</span>])) )
+p_setosa += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">0</span>]), statistics.stdev(sw[<span class="hljs-number">0</span>])) )
+p_setosa += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">0</span>]), statistics.stdev(pl[<span class="hljs-number">0</span>])) )
+p_setosa += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">0</span>]), statistics.stdev(pw[<span class="hljs-number">0</span>])) )
+p_setosa += math.log( setosa / (setosa+versicolor+virginica) )
+
+p_versicolor += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">1</span>]), statistics.stdev(sl[<span class="hljs-number">1</span>])) )
+p_versicolor += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">1</span>]), statistics.stdev(sw[<span class="hljs-number">1</span>])) )
+p_versicolor += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">1</span>]), statistics.stdev(pl[<span class="hljs-number">1</span>])) )
+p_versicolor += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">1</span>]), statistics.stdev(pw[<span class="hljs-number">1</span>])) )
+p_versicolor += math.log( versicolor / (setosa+versicolor+virginica) )
+
+p_virginica += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">2</span>]), statistics.stdev(sl[<span class="hljs-number">2</span>])) )
+p_virginica += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">2</span>]), statistics.stdev(sw[<span class="hljs-number">2</span>])) )
+p_virginica += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">2</span>]), statistics.stdev(pl[<span class="hljs-number">2</span>])) )
+p_virginica += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">2</span>]), statistics.stdev(pw[<span class="hljs-number">2</span>])) )
+p_virginica += math.log( virginica / (setosa+versicolor+virginica) )
+</div></div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>Train-Test-Split</p>
+<ul>
+<li>Holdout validation</li>
+<li>K-fold cross-validation</li>
+</ul>
+</li>
+<li>
+<p>Results</p>
+<ul>
+<li>Holdout validation
+<ol>
+<li>Mushroom Result<pre><code>Holdout Validation
+--------------------------------------------------
+Confusion matrix
+                 Predict Edible  Predict Poisonous
+Actual Edible     1043            9
+Actual Poisonous  222            419
+--------------------------------------------------
+Accuracy               0.863555818074424
+Precision (Edible)     0.9914448669201521
+Precision (Poisonous)  0.6536661466458659
+Recall (Edible)        0.824505928853755
+Recall (Poisonous)     0.9789719626168224
+--------------------------------------------------
+data_count               5644
+train_data_count         3951
+test_data_count          1693
+Laplace k                3
+</code></pre>
+</li>
+<li>Iris Result<pre><code>Holdout validation
+-----------------------------------------------------------------------
+Confusion matrix
+                  Predict setosa  Predict versicolor  Predict virginica
+Actual setosa      13              0                   0
+Actual versicolor  0              15                   0
+Actual virginica   0              1                   16
+-----------------------------------------------------------------------
+Accuracy                0.9777777777777777
+Precision (setosa)      1.0
+Precision (versicolor)  1.0
+Precision (virginica)   0.9411764705882353
+Recall (setosa)         0.9285714285714286
+Recall (versicolor)     0.9375
+Recall (virginica)      1.0
+-----------------------------------------------------------------------
+data_count         150
+train_data_count   105
+test_data_count    45
+</code></pre>
+</li>
+</ol>
+</li>
+<li>K-fold cross-validation
+<ol>
+<li>Mushroom Result<pre><code>K-fold cross-validation
+--------------------------------------------------
+Confusion matrix
+                 Predict Edible               Predict Poisonous
+Actual Edible     1156.6666666666667                6
+Actual Poisonous  251.33333333333334                467
+--------------------------------------------------
+Accuracy               0.8631933368775474
+Precision (Edible)     0.9948394495412844
+Precision (Poisonous)  0.6501160092807424
+Recall (Edible)        0.8214962121212122
+Recall (Poisonous)     0.9873150105708245
+--------------------------------------------------
+data_count              5644
+train_data_count (avg)  3763
+test_data_count (avg)   1881
+Laplace k               3
+</code></pre>
+</li>
+<li>Iris Result<pre><code>K-fold cross-validation
+-----------------------------------------------------------------------
+Confusion matrix
+                  Predict setosa      Predict versicolor      Predict virginica
+Actual setosa      16.666666666666668                  0                       0
+Actual versicolor  0                  15.333333333333334                       1.3333333333333333
+Actual virginica   0                  1.3333333333333333                       15.333333333333334
+-----------------------------------------------------------------------
+Accuracy                0.9466666666666665
+Precision (setosa)      1.0
+Precision (versicolor)  0.9199999999999999
+Precision (virginica)   0.9199999999999999
+Recall (setosa)         0.8620689655172415
+Recall (versicolor)     0.9199999999999999
+Recall (virginica)      0.9199999999999999
+-----------------------------------------------------------------------
+data_count              150
+train_data_count (avg)  100
+test_data_count (avg)   50
+</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>Comparison &amp; Conclusion</p>
+<ol>
+<li>Mushroom
+<ul>
+<li>With Laplace Smoothing<pre><code>K-fold cross-validation
+--------------------------------------------------
+Confusion matrix
+                 Predict Edible               Predict Poisonous
+Actual Edible     1156.6666666666667                6
+Actual Poisonous  251.33333333333334                467
+--------------------------------------------------
+Accuracy               0.8631933368775474
+Precision (Edible)     0.9948394495412844
+Precision (Poisonous)  0.6501160092807424
+Recall (Edible)        0.8214962121212122
+Recall (Poisonous)     0.9873150105708245
+--------------------------------------------------
+data_count              5644
+train_data_count (avg)  3763
+test_data_count (avg)   1881
+Laplace k               3
+</code></pre>
+</li>
+<li>Without Laplace Smoothing<pre><code>Holdout Validation
+--------------------------------------------------
+Confusion matrix
+                 Predict Edible  Predict Poisonous
+Actual Edible     984            44
+Actual Poisonous  302            363
+--------------------------------------------------
+Accuracy               0.7956290608387477
+Precision (Edible)     0.9571984435797666
+Precision (Poisonous)  0.5458646616541354
+Recall (Edible)        0.7651632970451011
+Recall (Poisonous)     0.8918918918918919
+--------------------------------------------------
+data_count               5644
+train_data_count         3951
+test_data_count          1693
+Laplace k                0
+</code></pre>
+</li>
+<li>Concluson: Laplace smoothing increase the accuracy effciently in the dataset case.</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol><h1 id="Codes"><a class="anchor hidden-xs" href="#Codes" title="Codes"><span class="octicon octicon-link"></span></a>Codes</h1><h2 id="Mushroom-dataset-with-Holdout-validation"><a class="anchor hidden-xs" href="#Mushroom-dataset-with-Holdout-validation" title="Mushroom-dataset-with-Holdout-validation"><span class="octicon octicon-link"></span></a>Mushroom dataset with Holdout validation</h2><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span>
+<span data-linenumber="102"></span>
+<span data-linenumber="103"></span>
+<span data-linenumber="104"></span>
+<span data-linenumber="105"></span>
+<span data-linenumber="106"></span>
+<span data-linenumber="107"></span>
+<span data-linenumber="108"></span>
+<span data-linenumber="109"></span>
+<span data-linenumber="110"></span>
+<span data-linenumber="111"></span>
+<span data-linenumber="112"></span>
+<span data-linenumber="113"></span>
+<span data-linenumber="114"></span>
+<span data-linenumber="115"></span>
+<span data-linenumber="116"></span>
+<span data-linenumber="117"></span>
+<span data-linenumber="118"></span>
+<span data-linenumber="119"></span>
+<span data-linenumber="120"></span>
+<span data-linenumber="121"></span>
+<span data-linenumber="122"></span></div><div class="code"><span class="hljs-comment">#Holdout validation</span>
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+feature_count =  [<span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]
+k = <span class="hljs-number">3</span>
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'Downloads/agaricus-lepiota.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    random.shuffle(rows)
+    
+    
+    feature_list = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    data_count = <span class="hljs-number">0</span>
+    train_data_count = <span class="hljs-number">0</span>
+    test_data_count = <span class="hljs-number">0</span>
+    TE = <span class="hljs-number">0</span>
+    FE = <span class="hljs-number">0</span>
+    FP = <span class="hljs-number">0</span>
+    TP = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> row[<span class="hljs-number">11</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'?'</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+    
+    random.shuffle(rows)
+    test_range_s = <span class="hljs-number">0</span>
+    test_range_e = test_range_s + int(data_count * <span class="hljs-number">0.3</span>)
+    
+    <span class="hljs-comment"># Train</span>
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+        <span class="hljs-keyword">if</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+            <span class="hljs-keyword">continue</span>
+            
+        row = rows[r]
+        
+        label = row[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">if</span> label <span class="hljs-keyword">in</span> feature_list[<span class="hljs-number">0</span>]:
+            feature_list[<span class="hljs-number">0</span>][label]+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            feature_list[<span class="hljs-number">0</span>][label] = <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+            label_feature = label + row[i]
+            <span class="hljs-keyword">if</span> label_feature <span class="hljs-keyword">in</span> feature_list[i]:
+                feature_list[i][label_feature]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                feature_list[i][label_feature] = <span class="hljs-number">1</span>
+        train_data_count+=<span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Test</span>
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+        row = rows[r]
+        
+        p_edible = <span class="hljs-number">0</span>
+        p_poisonous = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+            <span class="hljs-keyword">if</span> <span class="hljs-string">'e'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+                p_edible += math.log( ( feature_list[i][<span class="hljs-string">'e'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + (k*feature_count[i]) ) )
+            <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+                p_edible += math.log(<span class="hljs-number">1</span>/feature_count[i])
+            <span class="hljs-keyword">if</span> <span class="hljs-string">'p'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+                p_poisonous += math.log( ( feature_list[i][<span class="hljs-string">'p'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]+ (k*feature_count[i]) ) )
+            <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+                p_poisonous += math.log(<span class="hljs-number">1</span>/feature_count[i])
+        
+        p_edible += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+        p_poisonous += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+        
+        <span class="hljs-keyword">if</span> p_edible &gt;= p_poisonous:
+            <span class="hljs-comment"># Predict Edible</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'e'</span>:
+                TE+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'p'</span>:
+                FP+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-comment"># Predict Poisonous</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'e'</span>:
+                FE+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'p'</span>:
+                TP+=<span class="hljs-number">1</span>
+        
+        test_data_count+=<span class="hljs-number">1</span>
+    
+<span class="hljs-comment"># Results</span>
+print(<span class="hljs-string">"Holdout Validation"</span>)
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"Confusion matrix"</span>)
+print(<span class="hljs-string">"                 Predict Edible  Predict Poisonous"</span>)
+print(<span class="hljs-string">"Actual Edible    "</span>, TE, <span class="hljs-string">"          "</span>, FE)
+print(<span class="hljs-string">"Actual Poisonous "</span>, FP, <span class="hljs-string">"          "</span>, TP)
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"Accuracy              "</span>, (TE+TP) / (TE+TP+FE+FP))
+print(<span class="hljs-string">"Precision (Edible)    "</span>, (TE) / (TE+FE))
+print(<span class="hljs-string">"Precision (Poisonous) "</span>, (TP) / (TP+FP))
+print(<span class="hljs-string">"Recall (Edible)       "</span>, (TE) / (TE+FP))
+print(<span class="hljs-string">"Recall (Poisonous)    "</span>, (TP) / (TP+FE))
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"data_count              "</span>, data_count)
+print(<span class="hljs-string">"train_data_count        "</span>, train_data_count)
+print(<span class="hljs-string">"test_data_count         "</span>, test_data_count)
+print(<span class="hljs-string">"Laplace k               "</span>, k)
+
+<span class="hljs-comment">###</span>
+<span class="hljs-comment">#                   |   Predict  |    Predict</span>
+<span class="hljs-comment">#                   |   Edible   |   Poisonous</span>
+<span class="hljs-comment">#-------------------+------------+-------------</span>
+<span class="hljs-comment">#  Actual Edible    |     TE     |     FE</span>
+<span class="hljs-comment">#-------------------+------------+-------------</span>
+<span class="hljs-comment">#  Actual Poisonous |     FP     |     TP</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">###</span>
+        
+</div></div></code></pre><h2 id="Mushroom-dataset-with-K-fold-cross-validation"><a class="anchor hidden-xs" href="#Mushroom-dataset-with-K-fold-cross-validation" title="Mushroom-dataset-with-K-fold-cross-validation"><span class="octicon octicon-link"></span></a>Mushroom dataset with K-fold cross-validation</h2><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span>
+<span data-linenumber="102"></span>
+<span data-linenumber="103"></span>
+<span data-linenumber="104"></span>
+<span data-linenumber="105"></span>
+<span data-linenumber="106"></span>
+<span data-linenumber="107"></span>
+<span data-linenumber="108"></span>
+<span data-linenumber="109"></span>
+<span data-linenumber="110"></span>
+<span data-linenumber="111"></span>
+<span data-linenumber="112"></span>
+<span data-linenumber="113"></span>
+<span data-linenumber="114"></span>
+<span data-linenumber="115"></span>
+<span data-linenumber="116"></span>
+<span data-linenumber="117"></span>
+<span data-linenumber="118"></span>
+<span data-linenumber="119"></span>
+<span data-linenumber="120"></span>
+<span data-linenumber="121"></span>
+<span data-linenumber="122"></span>
+<span data-linenumber="123"></span>
+<span data-linenumber="124"></span>
+<span data-linenumber="125"></span></div><div class="code"><span class="hljs-comment">#K-fold cross-validation</span>
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+feature_count =  [<span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]
+k = <span class="hljs-number">3</span>
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'Downloads/agaricus-lepiota.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    random.shuffle(rows)
+    
+    
+    feature_list = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    data_count = <span class="hljs-number">0</span>
+    train_data_count = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    test_data_count = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    TE = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FE = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FP = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    TP = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> row[<span class="hljs-number">11</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'?'</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+    
+    test_range_e = <span class="hljs-number">0</span>
+    k_ford_k = <span class="hljs-number">3</span>
+    <span class="hljs-keyword">for</span> k_ford_i <span class="hljs-keyword">in</span> range(k_ford_k):
+        test_range_s = test_range_e
+        test_range_e = test_range_s + int(data_count / k_ford_k)
+        test_range_e = min(test_range_e, data_count)
+
+        <span class="hljs-comment"># Train</span>
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+            <span class="hljs-keyword">if</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+                <span class="hljs-keyword">continue</span>
+
+            row = rows[r]
+
+            label = row[<span class="hljs-number">0</span>]
+            <span class="hljs-keyword">if</span> label <span class="hljs-keyword">in</span> feature_list[<span class="hljs-number">0</span>]:
+                feature_list[<span class="hljs-number">0</span>][label]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                feature_list[<span class="hljs-number">0</span>][label] = <span class="hljs-number">1</span>
+
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+                label_feature = label + row[i]
+                <span class="hljs-keyword">if</span> label_feature <span class="hljs-keyword">in</span> feature_list[i]:
+                    feature_list[i][label_feature]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">else</span>:
+                    feature_list[i][label_feature] = <span class="hljs-number">1</span>
+            train_data_count[k_ford_i]+=<span class="hljs-number">1</span>
+
+        <span class="hljs-comment"># Test</span>
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+            row = rows[r]
+
+            p_edible = <span class="hljs-number">0</span>
+            p_poisonous = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range (<span class="hljs-number">1</span>, <span class="hljs-number">23</span>):
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'e'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+                    p_edible += math.log( ( feature_list[i][<span class="hljs-string">'e'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + (k*feature_count[i]) ) )
+                <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+                    p_edible += math.log(<span class="hljs-number">1</span>/feature_count[i])
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'p'</span>+row[i] <span class="hljs-keyword">in</span> feature_list[i]:
+                    p_poisonous += math.log( ( feature_list[i][<span class="hljs-string">'p'</span>+row[i]] + k ) / ( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]+ (k*feature_count[i]) ) )
+                <span class="hljs-keyword">elif</span> k <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span>:
+                    p_poisonous += math.log(<span class="hljs-number">1</span>/feature_count[i])
+
+            p_edible += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+            p_poisonous += math.log( feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>] / (feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'e'</span>] + feature_list[<span class="hljs-number">0</span>][<span class="hljs-string">'p'</span>]) )
+
+            <span class="hljs-keyword">if</span> p_edible &gt;= p_poisonous:
+                <span class="hljs-comment"># Predict Edible</span>
+                <span class="hljs-keyword">if</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'e'</span>:
+                    TE[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'p'</span>:
+                    FP[k_ford_i]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-comment"># Predict Poisonous</span>
+                <span class="hljs-keyword">if</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'e'</span>:
+                    FE[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'p'</span>:
+                    TP[k_ford_i]+=<span class="hljs-number">1</span>
+
+            test_data_count[k_ford_i]+=<span class="hljs-number">1</span>
+    
+<span class="hljs-comment"># Results</span>
+print(<span class="hljs-string">"K-fold cross-validation"</span>)
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"Confusion matrix"</span>)
+print(<span class="hljs-string">"                 Predict Edible               Predict Poisonous"</span>)
+print(<span class="hljs-string">"Actual Edible    "</span>, statistics.mean(TE), <span class="hljs-string">"              "</span>, statistics.mean(FE))
+print(<span class="hljs-string">"Actual Poisonous "</span>, statistics.mean(FP), <span class="hljs-string">"              "</span>, statistics.mean(TP))
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"Accuracy              "</span>, (statistics.mean(TE)+statistics.mean(TP)) / (statistics.mean(TE)+statistics.mean(TP)+statistics.mean(FE)+statistics.mean(FP)))
+print(<span class="hljs-string">"Precision (Edible)    "</span>, (statistics.mean(TE)) / (statistics.mean(TE)+statistics.mean(FE)))
+print(<span class="hljs-string">"Precision (Poisonous) "</span>, (statistics.mean(TP)) / (statistics.mean(TP)+statistics.mean(FP)))
+print(<span class="hljs-string">"Recall (Edible)       "</span>, (statistics.mean(TE)) / (statistics.mean(TE)+statistics.mean(FP)))
+print(<span class="hljs-string">"Recall (Poisonous)    "</span>, (statistics.mean(TP)) / (statistics.mean(TP)+statistics.mean(FE)))
+print(<span class="hljs-string">"--------------------------------------------------"</span>)
+print(<span class="hljs-string">"data_count             "</span>, data_count)
+print(<span class="hljs-string">"train_data_count (avg) "</span>, statistics.mean(train_data_count))
+print(<span class="hljs-string">"test_data_count (avg)  "</span>, statistics.mean(test_data_count))
+print(<span class="hljs-string">"Laplace k              "</span>, k)
+
+<span class="hljs-comment">###</span>
+<span class="hljs-comment">#                   |   Predict  |    Predict</span>
+<span class="hljs-comment">#                   |   Edible   |   Poisonous</span>
+<span class="hljs-comment">#-------------------+------------+-------------</span>
+<span class="hljs-comment">#  Actual Edible    |     TE     |     FE</span>
+<span class="hljs-comment">#-------------------+------------+-------------</span>
+<span class="hljs-comment">#  Actual Poisonous |     FP     |     TP</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">###</span>
+        
+</div></div></code></pre><h2 id="Iris-dataset-with-Holdout-validation"><a class="anchor hidden-xs" href="#Iris-dataset-with-Holdout-validation" title="Iris-dataset-with-Holdout-validation"><span class="octicon octicon-link"></span></a>Iris dataset with Holdout validation</h2><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span>
+<span data-linenumber="102"></span>
+<span data-linenumber="103"></span>
+<span data-linenumber="104"></span>
+<span data-linenumber="105"></span>
+<span data-linenumber="106"></span>
+<span data-linenumber="107"></span>
+<span data-linenumber="108"></span>
+<span data-linenumber="109"></span>
+<span data-linenumber="110"></span>
+<span data-linenumber="111"></span>
+<span data-linenumber="112"></span>
+<span data-linenumber="113"></span>
+<span data-linenumber="114"></span>
+<span data-linenumber="115"></span>
+<span data-linenumber="116"></span>
+<span data-linenumber="117"></span>
+<span data-linenumber="118"></span>
+<span data-linenumber="119"></span>
+<span data-linenumber="120"></span>
+<span data-linenumber="121"></span>
+<span data-linenumber="122"></span>
+<span data-linenumber="123"></span>
+<span data-linenumber="124"></span>
+<span data-linenumber="125"></span>
+<span data-linenumber="126"></span>
+<span data-linenumber="127"></span>
+<span data-linenumber="128"></span>
+<span data-linenumber="129"></span>
+<span data-linenumber="130"></span>
+<span data-linenumber="131"></span>
+<span data-linenumber="132"></span>
+<span data-linenumber="133"></span>
+<span data-linenumber="134"></span>
+<span data-linenumber="135"></span>
+<span data-linenumber="136"></span>
+<span data-linenumber="137"></span>
+<span data-linenumber="138"></span>
+<span data-linenumber="139"></span>
+<span data-linenumber="140"></span>
+<span data-linenumber="141"></span>
+<span data-linenumber="142"></span>
+<span data-linenumber="143"></span>
+<span data-linenumber="144"></span>
+<span data-linenumber="145"></span>
+<span data-linenumber="146"></span>
+<span data-linenumber="147"></span>
+<span data-linenumber="148"></span>
+<span data-linenumber="149"></span>
+<span data-linenumber="150"></span>
+<span data-linenumber="151"></span>
+<span data-linenumber="152"></span>
+<span data-linenumber="153"></span>
+<span data-linenumber="154"></span>
+<span data-linenumber="155"></span>
+<span data-linenumber="156"></span>
+<span data-linenumber="157"></span>
+<span data-linenumber="158"></span>
+<span data-linenumber="159"></span>
+<span data-linenumber="160"></span>
+<span data-linenumber="161"></span>
+<span data-linenumber="162"></span></div><div class="code"><span class="hljs-comment">#Holdout validation</span>
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">GD</span><span class="hljs-params">(x, mu, sigma)</span>:</span>
+    N = <span class="hljs-number">1</span>/(sigma * np.sqrt(<span class="hljs-number">2</span> * np.pi)) * np.exp( - (x - mu)**<span class="hljs-number">2</span> / (<span class="hljs-number">2</span> * sigma**<span class="hljs-number">2</span>) )
+    <span class="hljs-keyword">return</span>(N)
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'bezdekIris.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    random.shuffle(rows)
+
+    sl = [ [], [], [] ]
+    sw = [ [], [], [] ]
+    pl = [ [], [], [] ]
+    pw = [ [], [], [] ]
+    data_count = <span class="hljs-number">0</span>
+    train_data_count = <span class="hljs-number">0</span>
+    test_data_count = <span class="hljs-number">0</span>
+    setosa = <span class="hljs-number">0</span>
+    versicolor = <span class="hljs-number">0</span>
+    virginica = <span class="hljs-number">0</span>
+    TS = <span class="hljs-number">0</span>
+    FSC = <span class="hljs-number">0</span>
+    FSG = <span class="hljs-number">0</span>
+    TG = <span class="hljs-number">0</span>
+    FGS = <span class="hljs-number">0</span>
+    FGC = <span class="hljs-number">0</span>
+    TC = <span class="hljs-number">0</span>
+    FCS = <span class="hljs-number">0</span>
+    FCG = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> len(row) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+    
+    random.shuffle(rows)
+    test_range_s = <span class="hljs-number">0</span>
+    test_range_e = test_range_s + int(data_count * <span class="hljs-number">0.3</span>)
+    
+    <span class="hljs-comment"># Train</span>
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+        <span class="hljs-keyword">if</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+            <span class="hljs-keyword">continue</span>
+        
+        row = rows[r]
+        
+        iris = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+            iris = <span class="hljs-number">0</span>
+            setosa+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+            iris = <span class="hljs-number">1</span>
+            versicolor+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+            iris = <span class="hljs-number">2</span>
+            virginica+=<span class="hljs-number">1</span>
+        
+        sl[iris].append(float(row[<span class="hljs-number">0</span>]))
+        sw[iris].append(float(row[<span class="hljs-number">1</span>]))
+        pl[iris].append(float(row[<span class="hljs-number">2</span>]))
+        pw[iris].append(float(row[<span class="hljs-number">3</span>]))
+        
+        train_data_count+=<span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Test</span>
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range(test_range_s, test_range_e):
+        row = rows[r]
+        
+        p_setosa = <span class="hljs-number">0</span>
+        p_versicolor = <span class="hljs-number">0</span>
+        p_virginica = <span class="hljs-number">0</span>
+        
+        p_setosa += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">0</span>]), statistics.stdev(sl[<span class="hljs-number">0</span>])) )
+        p_setosa += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">0</span>]), statistics.stdev(sw[<span class="hljs-number">0</span>])) )
+        p_setosa += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">0</span>]), statistics.stdev(pl[<span class="hljs-number">0</span>])) )
+        p_setosa += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">0</span>]), statistics.stdev(pw[<span class="hljs-number">0</span>])) )
+        p_setosa += math.log( setosa / (setosa+versicolor+virginica) )
+        
+        p_versicolor += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">1</span>]), statistics.stdev(sl[<span class="hljs-number">1</span>])) )
+        p_versicolor += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">1</span>]), statistics.stdev(sw[<span class="hljs-number">1</span>])) )
+        p_versicolor += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">1</span>]), statistics.stdev(pl[<span class="hljs-number">1</span>])) )
+        p_versicolor += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">1</span>]), statistics.stdev(pw[<span class="hljs-number">1</span>])) )
+        p_versicolor += math.log( versicolor / (setosa+versicolor+virginica) )
+        
+        p_virginica += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">2</span>]), statistics.stdev(sl[<span class="hljs-number">2</span>])) )
+        p_virginica += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">2</span>]), statistics.stdev(sw[<span class="hljs-number">2</span>])) )
+        p_virginica += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">2</span>]), statistics.stdev(pl[<span class="hljs-number">2</span>])) )
+        p_virginica += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">2</span>]), statistics.stdev(pw[<span class="hljs-number">2</span>])) )
+        p_virginica += math.log( virginica / (setosa+versicolor+virginica) )
+        
+        max_p = max(p_setosa, p_versicolor, p_virginica)
+        
+        <span class="hljs-keyword">if</span> max_p == p_setosa:
+            <span class="hljs-comment"># Predict setosa</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                TS+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                FSC+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                FSG+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> max_p == p_versicolor:
+            <span class="hljs-comment"># Predict versicolor</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                FCS+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                TC+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                FCG+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> max_p == p_virginica:
+            <span class="hljs-comment"># Predict virginica</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                FGS+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                FGC+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                TG+=<span class="hljs-number">1</span>
+                
+        test_data_count+=<span class="hljs-number">1</span>
+    
+<span class="hljs-comment"># Results</span>
+print(<span class="hljs-string">"Holdout validation"</span>)
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"Confusion matrix"</span>)
+print(<span class="hljs-string">"                  Predict setosa  Predict versicolor  Predict virginica"</span>)
+print(<span class="hljs-string">"Actual setosa     "</span>, TS, <span class="hljs-string">"            "</span>, FSC, <span class="hljs-string">"                 "</span>, FSG)
+print(<span class="hljs-string">"Actual versicolor "</span>, FCS, <span class="hljs-string">"            "</span>, TC, <span class="hljs-string">"                 "</span>, FCG)
+print(<span class="hljs-string">"Actual virginica  "</span>, FGS, <span class="hljs-string">"            "</span>, FGC, <span class="hljs-string">"                 "</span>, TG)
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"Accuracy               "</span>, (TS+TC+TG) / (TS+TC+TG+FSC+FSG+FCS+FCG+FGS+FGC))
+print(<span class="hljs-string">"Precision (setosa)     "</span>, (TS) / (TS+FSC+FSG))
+print(<span class="hljs-string">"Precision (versicolor) "</span>, (TC) / (TC+FCS+FCG))
+print(<span class="hljs-string">"Precision (virginica)  "</span>, (TG) / (TG+FGS+FGC))
+print(<span class="hljs-string">"Recall (setosa)        "</span>, (TS) / (TS+FCS+FCG+FGS+FGC))
+print(<span class="hljs-string">"Recall (versicolor)    "</span>, (TC) / (TC+FSC+FSG+FGS+FGC))
+print(<span class="hljs-string">"Recall (virginica)     "</span>, (TG) / (TG+FSC+FSG+FCS+FCG))
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"data_count        "</span>, data_count)
+print(<span class="hljs-string">"train_data_count  "</span>, train_data_count)
+print(<span class="hljs-string">"test_data_count   "</span>, test_data_count)
+
+<span class="hljs-comment">###</span>
+<span class="hljs-comment">#                    |   Predict  |   Predict   |   Predict</span>
+<span class="hljs-comment">#                    |   setosa   |  versicolor |  virginica</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual setosa     |     TS     |     FSC     |     FSG</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual versicolor |     FCS    |     TC      |     FCG</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual virginica  |     FGS    |     FGC     |     TG</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">###</span>
+</div></div></code></pre><h2 id="Iris-dataset-with-K-fold-cross-validation"><a class="anchor hidden-xs" href="#Iris-dataset-with-K-fold-cross-validation" title="Iris-dataset-with-K-fold-cross-validation"><span class="octicon octicon-link"></span></a>Iris dataset with K-fold cross-validation</h2><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
+<span data-linenumber="2"></span>
+<span data-linenumber="3"></span>
+<span data-linenumber="4"></span>
+<span data-linenumber="5"></span>
+<span data-linenumber="6"></span>
+<span data-linenumber="7"></span>
+<span data-linenumber="8"></span>
+<span data-linenumber="9"></span>
+<span data-linenumber="10"></span>
+<span data-linenumber="11"></span>
+<span data-linenumber="12"></span>
+<span data-linenumber="13"></span>
+<span data-linenumber="14"></span>
+<span data-linenumber="15"></span>
+<span data-linenumber="16"></span>
+<span data-linenumber="17"></span>
+<span data-linenumber="18"></span>
+<span data-linenumber="19"></span>
+<span data-linenumber="20"></span>
+<span data-linenumber="21"></span>
+<span data-linenumber="22"></span>
+<span data-linenumber="23"></span>
+<span data-linenumber="24"></span>
+<span data-linenumber="25"></span>
+<span data-linenumber="26"></span>
+<span data-linenumber="27"></span>
+<span data-linenumber="28"></span>
+<span data-linenumber="29"></span>
+<span data-linenumber="30"></span>
+<span data-linenumber="31"></span>
+<span data-linenumber="32"></span>
+<span data-linenumber="33"></span>
+<span data-linenumber="34"></span>
+<span data-linenumber="35"></span>
+<span data-linenumber="36"></span>
+<span data-linenumber="37"></span>
+<span data-linenumber="38"></span>
+<span data-linenumber="39"></span>
+<span data-linenumber="40"></span>
+<span data-linenumber="41"></span>
+<span data-linenumber="42"></span>
+<span data-linenumber="43"></span>
+<span data-linenumber="44"></span>
+<span data-linenumber="45"></span>
+<span data-linenumber="46"></span>
+<span data-linenumber="47"></span>
+<span data-linenumber="48"></span>
+<span data-linenumber="49"></span>
+<span data-linenumber="50"></span>
+<span data-linenumber="51"></span>
+<span data-linenumber="52"></span>
+<span data-linenumber="53"></span>
+<span data-linenumber="54"></span>
+<span data-linenumber="55"></span>
+<span data-linenumber="56"></span>
+<span data-linenumber="57"></span>
+<span data-linenumber="58"></span>
+<span data-linenumber="59"></span>
+<span data-linenumber="60"></span>
+<span data-linenumber="61"></span>
+<span data-linenumber="62"></span>
+<span data-linenumber="63"></span>
+<span data-linenumber="64"></span>
+<span data-linenumber="65"></span>
+<span data-linenumber="66"></span>
+<span data-linenumber="67"></span>
+<span data-linenumber="68"></span>
+<span data-linenumber="69"></span>
+<span data-linenumber="70"></span>
+<span data-linenumber="71"></span>
+<span data-linenumber="72"></span>
+<span data-linenumber="73"></span>
+<span data-linenumber="74"></span>
+<span data-linenumber="75"></span>
+<span data-linenumber="76"></span>
+<span data-linenumber="77"></span>
+<span data-linenumber="78"></span>
+<span data-linenumber="79"></span>
+<span data-linenumber="80"></span>
+<span data-linenumber="81"></span>
+<span data-linenumber="82"></span>
+<span data-linenumber="83"></span>
+<span data-linenumber="84"></span>
+<span data-linenumber="85"></span>
+<span data-linenumber="86"></span>
+<span data-linenumber="87"></span>
+<span data-linenumber="88"></span>
+<span data-linenumber="89"></span>
+<span data-linenumber="90"></span>
+<span data-linenumber="91"></span>
+<span data-linenumber="92"></span>
+<span data-linenumber="93"></span>
+<span data-linenumber="94"></span>
+<span data-linenumber="95"></span>
+<span data-linenumber="96"></span>
+<span data-linenumber="97"></span>
+<span data-linenumber="98"></span>
+<span data-linenumber="99"></span>
+<span data-linenumber="100"></span>
+<span data-linenumber="101"></span>
+<span data-linenumber="102"></span>
+<span data-linenumber="103"></span>
+<span data-linenumber="104"></span>
+<span data-linenumber="105"></span>
+<span data-linenumber="106"></span>
+<span data-linenumber="107"></span>
+<span data-linenumber="108"></span>
+<span data-linenumber="109"></span>
+<span data-linenumber="110"></span>
+<span data-linenumber="111"></span>
+<span data-linenumber="112"></span>
+<span data-linenumber="113"></span>
+<span data-linenumber="114"></span>
+<span data-linenumber="115"></span>
+<span data-linenumber="116"></span>
+<span data-linenumber="117"></span>
+<span data-linenumber="118"></span>
+<span data-linenumber="119"></span>
+<span data-linenumber="120"></span>
+<span data-linenumber="121"></span>
+<span data-linenumber="122"></span>
+<span data-linenumber="123"></span>
+<span data-linenumber="124"></span>
+<span data-linenumber="125"></span>
+<span data-linenumber="126"></span>
+<span data-linenumber="127"></span>
+<span data-linenumber="128"></span>
+<span data-linenumber="129"></span>
+<span data-linenumber="130"></span>
+<span data-linenumber="131"></span>
+<span data-linenumber="132"></span>
+<span data-linenumber="133"></span>
+<span data-linenumber="134"></span>
+<span data-linenumber="135"></span>
+<span data-linenumber="136"></span>
+<span data-linenumber="137"></span>
+<span data-linenumber="138"></span>
+<span data-linenumber="139"></span>
+<span data-linenumber="140"></span>
+<span data-linenumber="141"></span>
+<span data-linenumber="142"></span>
+<span data-linenumber="143"></span>
+<span data-linenumber="144"></span>
+<span data-linenumber="145"></span>
+<span data-linenumber="146"></span>
+<span data-linenumber="147"></span>
+<span data-linenumber="148"></span>
+<span data-linenumber="149"></span>
+<span data-linenumber="150"></span>
+<span data-linenumber="151"></span>
+<span data-linenumber="152"></span>
+<span data-linenumber="153"></span>
+<span data-linenumber="154"></span>
+<span data-linenumber="155"></span>
+<span data-linenumber="156"></span>
+<span data-linenumber="157"></span>
+<span data-linenumber="158"></span>
+<span data-linenumber="159"></span>
+<span data-linenumber="160"></span>
+<span data-linenumber="161"></span>
+<span data-linenumber="162"></span>
+<span data-linenumber="163"></span>
+<span data-linenumber="164"></span>
+<span data-linenumber="165"></span>
+<span data-linenumber="166"></span></div><div class="code"><span class="hljs-comment">#K-fold cross-validation</span>
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> statistics
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">GD</span><span class="hljs-params">(x, mu, sigma)</span>:</span>
+    N = <span class="hljs-number">1</span>/(sigma * np.sqrt(<span class="hljs-number">2</span> * np.pi)) * np.exp( - (x - mu)**<span class="hljs-number">2</span> / (<span class="hljs-number">2</span> * sigma**<span class="hljs-number">2</span>) )
+    <span class="hljs-keyword">return</span>(N)
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'bezdekIris.data'</span>, newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> csvfile:
+    rows = list(csv.reader(csvfile))
+    random.shuffle(rows)
+
+    data_count = <span class="hljs-number">0</span>
+    train_data_count = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    test_data_count = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    setosa = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    versicolor = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    virginica = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    TS = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FSC = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FSG = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    TG = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FGS = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FGC = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    TC = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FCS = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    FCG = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+    
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (len(rows)<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>):
+        row = rows[r]
+        <span class="hljs-keyword">if</span> len(row) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">del</span> rows[r]
+    data_count = len(rows)
+    
+    test_range_e = <span class="hljs-number">0</span>
+    k_ford_k = <span class="hljs-number">3</span>
+    <span class="hljs-keyword">for</span> k_ford_i <span class="hljs-keyword">in</span> range(k_ford_k):
+        test_range_s = test_range_e
+        test_range_e = test_range_s + int(data_count / k_ford_k)
+        test_range_e = min(test_range_e, data_count)
+        
+        sl = [ [], [], [] ]
+        sw = [ [], [], [] ]
+        pl = [ [], [], [] ]
+        pw = [ [], [], [] ]
+        
+        <span class="hljs-comment"># Train</span>
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range (<span class="hljs-number">0</span>, data_count):
+            <span class="hljs-keyword">if</span> r <span class="hljs-keyword">in</span> range (test_range_s, test_range_e):
+                <span class="hljs-keyword">continue</span>
+
+            row = rows[r]
+
+            iris = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                iris = <span class="hljs-number">0</span>
+                setosa[k_ford_i]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                iris = <span class="hljs-number">1</span>
+                versicolor[k_ford_i]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                iris = <span class="hljs-number">2</span>
+                virginica[k_ford_i]+=<span class="hljs-number">1</span>
+
+            sl[iris].append(float(row[<span class="hljs-number">0</span>]))
+            sw[iris].append(float(row[<span class="hljs-number">1</span>]))
+            pl[iris].append(float(row[<span class="hljs-number">2</span>]))
+            pw[iris].append(float(row[<span class="hljs-number">3</span>]))
+
+            train_data_count[k_ford_i]+=<span class="hljs-number">1</span>
+
+        <span class="hljs-comment"># Test</span>
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range(test_range_s, test_range_e):
+            row = rows[r]
+
+            p_setosa = <span class="hljs-number">0</span>
+            p_versicolor = <span class="hljs-number">0</span>
+            p_virginica = <span class="hljs-number">0</span>
+
+            p_setosa += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">0</span>]), statistics.stdev(sl[<span class="hljs-number">0</span>])) )
+            p_setosa += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">0</span>]), statistics.stdev(sw[<span class="hljs-number">0</span>])) )
+            p_setosa += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">0</span>]), statistics.stdev(pl[<span class="hljs-number">0</span>])) )
+            p_setosa += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">0</span>]), statistics.stdev(pw[<span class="hljs-number">0</span>])) )
+            p_setosa += math.log( setosa[k_ford_i] / (setosa[k_ford_i]+versicolor[k_ford_i]+virginica[k_ford_i]) )
+
+            p_versicolor += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">1</span>]), statistics.stdev(sl[<span class="hljs-number">1</span>])) )
+            p_versicolor += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">1</span>]), statistics.stdev(sw[<span class="hljs-number">1</span>])) )
+            p_versicolor += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">1</span>]), statistics.stdev(pl[<span class="hljs-number">1</span>])) )
+            p_versicolor += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">1</span>]), statistics.stdev(pw[<span class="hljs-number">1</span>])) )
+            p_versicolor += math.log( versicolor[k_ford_i] / (setosa[k_ford_i]+versicolor[k_ford_i]+virginica[k_ford_i]) )
+
+            p_virginica += math.log( GD(float(row[<span class="hljs-number">0</span>]), statistics.mean(sl[<span class="hljs-number">2</span>]), statistics.stdev(sl[<span class="hljs-number">2</span>])) )
+            p_virginica += math.log( GD(float(row[<span class="hljs-number">1</span>]), statistics.mean(sw[<span class="hljs-number">2</span>]), statistics.stdev(sw[<span class="hljs-number">2</span>])) )
+            p_virginica += math.log( GD(float(row[<span class="hljs-number">2</span>]), statistics.mean(pl[<span class="hljs-number">2</span>]), statistics.stdev(pl[<span class="hljs-number">2</span>])) )
+            p_virginica += math.log( GD(float(row[<span class="hljs-number">3</span>]), statistics.mean(pw[<span class="hljs-number">2</span>]), statistics.stdev(pw[<span class="hljs-number">2</span>])) )
+            p_virginica += math.log( virginica[k_ford_i] / (setosa[k_ford_i]+versicolor[k_ford_i]+virginica[k_ford_i]) )
+
+            max_p = max(p_setosa, p_versicolor, p_virginica)
+
+            <span class="hljs-keyword">if</span> max_p == p_setosa:
+                <span class="hljs-comment"># Predict setosa</span>
+                <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                    TS[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                    FSC[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                    FSG[k_ford_i]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> max_p == p_versicolor:
+                <span class="hljs-comment"># Predict versicolor</span>
+                <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                    FCS[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                    TC[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                    FCG[k_ford_i]+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> max_p == p_virginica:
+                <span class="hljs-comment"># Predict virginica</span>
+                <span class="hljs-keyword">if</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-setosa'</span>:
+                    FGS[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-versicolor'</span>:
+                    FGC[k_ford_i]+=<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> row[<span class="hljs-number">4</span>] == <span class="hljs-string">'Iris-virginica'</span>:
+                    TG[k_ford_i]+=<span class="hljs-number">1</span>
+
+            test_data_count[k_ford_i]+=<span class="hljs-number">1</span>
+    
+<span class="hljs-comment"># Results</span>
+print(<span class="hljs-string">"K-fold cross-validation"</span>)
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"Confusion matrix"</span>)
+print(<span class="hljs-string">"                  Predict setosa      Predict versicolor      Predict virginica"</span>)
+print(<span class="hljs-string">"Actual setosa     "</span>, statistics.mean(TS), <span class="hljs-string">"                "</span>, statistics.mean(FSC), <span class="hljs-string">"                     "</span>, statistics.mean(FSG))
+print(<span class="hljs-string">"Actual versicolor "</span>, statistics.mean(FGS), <span class="hljs-string">"                "</span>, statistics.mean(TC), <span class="hljs-string">"                     "</span>, statistics.mean(FCG))
+print(<span class="hljs-string">"Actual virginica  "</span>, statistics.mean(FGS), <span class="hljs-string">"                "</span>, statistics.mean(FGC), <span class="hljs-string">"                     "</span>, statistics.mean(TG))
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"Accuracy               "</span>, (statistics.mean(TS)+statistics.mean(TC)+statistics.mean(TG)) / (statistics.mean(TS)+statistics.mean(TC)+statistics.mean(TG)+statistics.mean(FSC)+statistics.mean(FSG)+statistics.mean(FGS)+statistics.mean(FCG)+statistics.mean(FGS)+statistics.mean(FGC)))
+print(<span class="hljs-string">"Precision (setosa)     "</span>, statistics.mean(TS) / (statistics.mean(TS)+statistics.mean(FSC)+statistics.mean(FSG)))
+print(<span class="hljs-string">"Precision (versicolor) "</span>, statistics.mean(TC) / (statistics.mean(TC)+statistics.mean(FGS)+statistics.mean(FCG)))
+print(<span class="hljs-string">"Precision (virginica)  "</span>, statistics.mean(TG) / (statistics.mean(TG)+statistics.mean(FGS)+statistics.mean(FGC)))
+print(<span class="hljs-string">"Recall (setosa)        "</span>, statistics.mean(TS) / (statistics.mean(TS)+statistics.mean(FGS)+statistics.mean(FCG)+statistics.mean(FGS)+statistics.mean(FGC)))
+print(<span class="hljs-string">"Recall (versicolor)    "</span>, statistics.mean(TC) / (statistics.mean(TC)+statistics.mean(FSC)+statistics.mean(FSG)+statistics.mean(FGS)+statistics.mean(FGC)))
+print(<span class="hljs-string">"Recall (virginica)     "</span>, statistics.mean(TG) / (statistics.mean(TG)+statistics.mean(FSC)+statistics.mean(FSG)+statistics.mean(FGS)+statistics.mean(FCG)))
+print(<span class="hljs-string">"-----------------------------------------------------------------------"</span>)
+print(<span class="hljs-string">"data_count             "</span>, data_count)
+print(<span class="hljs-string">"train_data_count (avg) "</span>, statistics.mean(train_data_count))
+print(<span class="hljs-string">"test_data_count (avg)  "</span>, statistics.mean(test_data_count))
+
+<span class="hljs-comment">###</span>
+<span class="hljs-comment">#                    |   Predict  |   Predict   |   Predict</span>
+<span class="hljs-comment">#                    |   setosa   |  versicolor |  virginica</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual setosa     |     TS     |     FSC     |     FSG</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual versicolor |     FCS    |     TC      |     FCG</span>
+<span class="hljs-comment">#--------------------+------------+-------------+-------------</span>
+<span class="hljs-comment">#  Actual virginica  |     FGS    |     FGC     |     TG</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">###</span>
+</div></div></code></pre></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc expand"><ul class="nav">
+<li class=""><a href="#2019-Introduction-to-Machine-Learning-Program-Assignment-1---Naïve-Bayes" title="2019 Introduction to Machine Learning Program
+Assignment #1 - Naïve Bayes">2019 Introduction to Machine Learning Program
+Assignment #1 - Naïve Bayes</a></li>
+<li class=""><a href="#Objective" title="Objective">Objective</a></li>
+<li><a href="#Codes" title="Codes">Codes</a><ul class="nav">
+<li><a href="#Mushroom-dataset-with-Holdout-validation" title="Mushroom dataset with Holdout validation">Mushroom dataset with Holdout validation</a></li>
+<li><a href="#Mushroom-dataset-with-K-fold-cross-validation" title="Mushroom dataset with K-fold cross-validation">Mushroom dataset with K-fold cross-validation</a></li>
+<li><a href="#Iris-dataset-with-Holdout-validation" title="Iris dataset with Holdout validation">Iris dataset with Holdout validation</a></li>
+<li><a href="#Iris-dataset-with-K-fold-cross-validation" title="Iris dataset with K-fold cross-validation">Iris dataset with K-fold cross-validation</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">全部收起</a><a class="back-to-top" href="#">回到頂部</a><a class="go-to-bottom" href="#">移至底部</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc expand"><ul class="nav">
+<li class=""><a href="#2019-Introduction-to-Machine-Learning-Program-Assignment-1---Naïve-Bayes" title="2019 Introduction to Machine Learning Program
+Assignment #1 - Naïve Bayes">2019 Introduction to Machine Learning Program
+Assignment #1 - Naïve Bayes</a></li>
+<li class=""><a href="#Objective" title="Objective">Objective</a></li>
+<li><a href="#Codes" title="Codes">Codes</a><ul class="nav">
+<li><a href="#Mushroom-dataset-with-Holdout-validation" title="Mushroom dataset with Holdout validation">Mushroom dataset with Holdout validation</a></li>
+<li><a href="#Mushroom-dataset-with-K-fold-cross-validation" title="Mushroom dataset with K-fold cross-validation">Mushroom dataset with K-fold cross-validation</a></li>
+<li><a href="#Iris-dataset-with-Holdout-validation" title="Iris dataset with Holdout validation">Iris dataset with Holdout validation</a></li>
+<li><a href="#Iris-dataset-with-K-fold-cross-validation" title="Iris dataset with K-fold cross-validation">Iris dataset with K-fold cross-validation</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">全部收起</a><a class="back-to-top" href="#">回到頂部</a><a class="go-to-bottom" href="#">移至底部</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
